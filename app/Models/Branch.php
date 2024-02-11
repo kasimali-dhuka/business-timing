@@ -9,7 +9,20 @@ class Branch extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'business_id',
+        'name',
+        'images',
+        'sunday_time',
+        'monday_time',
+        'tuesday_time',
+        'wednesday_time',
+        'thursday_time',
+        'friday_time',
+        'saturday_time',
+    ];
+
     public function business() {
-        $this->belongsTo(Business::class);
+        return $this->belongsTo(Business::class);
     }
 }

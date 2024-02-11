@@ -5,3 +5,7 @@
 label.error, div.error-message {
     @apply text-sm font-normal text-red-500;
 }
+
+.inputs-wrapper label.error {
+    @apply absolute top-full;
+}

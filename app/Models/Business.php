@@ -17,6 +17,6 @@ class Business extends Model
     ];
 
     public function branches() {
-        $this->hasMany(Branch::class);
+        return $this->hasMany(Branch::class);
     }
 }

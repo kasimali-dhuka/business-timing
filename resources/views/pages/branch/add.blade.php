@@ -11,6 +11,16 @@
 
             <div class="add-form">
                 <div class="form-wrapper">
+                    @if (session('success'))
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </svg>
+                            <div>
+                                {{ session('success') }}
+                            </div>
+                        </div>
+                    @endif
                     <form id="addBranchForm" action="{{ route('branch.post', ['business_id' => $business->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -37,7 +47,8 @@
                                         class="form-control" 
                                         id="branch_name" 
                                         name="branch_name" 
-                                        placeholder="Business name..." 
+                                        placeholder="Branch name..." 
+                                        value="{{ old('branch_name', '') }}"
                                     />
                                     @if($errors->has('branch_name'))
                                         <div class="error-message">{{ $errors->first('branch_name') }}</div>
@@ -46,16 +57,16 @@
                             </div>
                             <div class="col-12">
                                 <div class="mb-3">
-                                    <label for="branch_image" class="form-label">Business Logo</label>
+                                    <label for="branch_images" class="form-label">Business Logo</label>
                                     <input 
                                         class="form-control" 
                                         type="file" 
-                                        name="branch_image" 
-                                        id="branch_image" 
+                                        name="branch_images[]" 
+                                        id="branch_images" 
                                         multiple
                                     />
-                                    @if($errors->has('branch_image'))
-                                        <div class="error-message">{{ $errors->first('branch_image') }}</div>
+                                    @if($errors->has('branch_images'))
+                                        <div class="error-message">{{ $errors->first('branch_images') }}</div>
                                     @endif
                                 </div>
                             </div>
@@ -79,19 +90,23 @@
                                         <div class="timing-input-container flex justify-between items-center pb-4 mb-4 border-b-[1px]">
                                             <div class="indicator col-1">
                                                 <div class="flex justify-center items-center">
-                                                    <div class="w-3 h-3 bg-red-600 rounded-full"></div>
+                                                    {{-- <div class="w-3 h-3 bg-red-600 rounded-full"></div> --}}
+                                                    <div class="form-check">
+                                                        <input class="form-check-input dayCheckbox" type="checkbox" value="" checked />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="timing-title col-3 text-start">{{ $day }}</div>
                                             <div class="col-7">
                                                 <div class="timing-inputs">
                                                     <div class="inputs-container flex justify-start items-center mb-2" id="{{ strtolower($day).'_timing_0' }}" data-week="{{ strtolower($day) }}" data-sr="0">
-                                                        <div class="inputs-wrapper flex justify-start items-center">
+                                                        <div class="inputs-wrapper relative flex justify-start items-center">
                                                             <input 
                                                                 class="form-control"
                                                                 type="time" 
                                                                 name="{{ strtolower($day).'_start_time[]' }}" 
                                                                 id="{{ strtolower($day).'_start_time' }}"
+                                                                value="10:00"
                                                             />
                                                             <div class="mx-2 inline-block">-</div>
                                                             <input 
@@ -99,6 +114,7 @@
                                                                 type="time" 
                                                                 name="{{ strtolower($day).'_end_time[]' }}" 
                                                                 id="{{ strtolower($day).'_end_time' }}"
+                                                                value="14:00"
                                                             />
                                                         </div>
                                                         <div class="inputs-action ms-4">
@@ -113,6 +129,9 @@
                                                             </button>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="unavailable-text d-none text-gray-500">
+                                                    Unavailable
                                                 </div>
                                             </div>
                                             <div class="timing-action col-1">

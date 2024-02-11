@@ -41,15 +41,71 @@ $('#addBranchForm').validate({
         branch_name: {
             required: true,
         },
-        branch_image: {
+        'branch_images[]': {
             required: true,
         },
+        'sunday_start_time[]': {
+            required: false,
+            validTime: true
+        },
+        'sunday_end_time[]': {
+            required: false,
+            validTime: true
+        },
+        'monday_start_time[]': {
+            required: false,
+            validTime: true
+        },
+        'monday_end_time[]': {
+            required: false,
+            validTime: true
+        },
+        'tuesday_start_time[]': {
+            required: false,
+            validTime: true
+        },
+        'tuesday_end_time[]': {
+            required: false,
+            validTime: true
+        },
+        'wednesday_start_time[]': {
+            required: false,
+            validTime: true
+        },
+        'wednesday_end_time[]': {
+            required: false,
+            validTime: true
+        },
+        'thursday_start_time[]': {
+            required: false,
+            validTime: true
+        },
+        'thursday_end_time[]': {
+            required: false,
+            validTime: true
+        },
+        'friday_start_time[]': {
+            required: false,
+            validTime: true
+        },
+        'friday_end_time[]': {
+            required: false,
+            validTime: true
+        },
+        'saturday_start_time[]': {
+            required: false,
+            validTime: true
+        },
+        'saturday_end_time[]': {
+            required: false,
+            validTime: true
+        }
     },
     messages: {
         branch_name: {
             required: 'Please enter a valid Business name'
         },
-        branch_image: {
+        'branch_images[]': {
             required: 'Please select atleast one branch image'
         },
     },
@@ -80,4 +136,14 @@ jQuery.validator.addMethod(
         // return true
     },
     'Please enter a valid phone number'
+)
+
+jQuery.validator.addMethod(
+    'validTime',
+    function (value, element) {
+        return (
+            value || /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(value)
+        )
+    },
+    'Invalid time format'
 )

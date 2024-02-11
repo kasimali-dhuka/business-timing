@@ -12,7 +12,7 @@
     </head>
     <body class="relative min-h-screen">
         <header class="h-20">
-            <nav class="top-navbar fixed top-0 left-0 right-0 bg-white">
+            <nav class="top-navbar fixed top-0 left-0 z-50 right-0 bg-white">
                 <div class="nav-wrapper px-5 bg-slate-200">
                     <div class="nav-container py-3 flex justify-between items-center">
                         <div class="nav-brand">

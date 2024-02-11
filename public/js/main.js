@@ -19,3 +19,14 @@ $('.delete-timezone-btn').click(function (e) {
     e.preventDefault();
     $(this).closest('.inputs-container').remove()
 });
+
+$('.dayCheckbox').on('change', function (e) { 
+    e.preventDefault();
+    let inputWrapper = $(this).closest('.timing-input-container').find('.timing-inputs')
+    inputWrapper.toggleClass('d-none')
+    $(this).closest('.timing-input-container').find('.unavailable-text').toggleClass('d-none')
+    
+    inputWrapper.hasClass('d-none') ? 
+        inputWrapper.find('input[type="time"]').attr('disabled', true) :
+        inputWrapper.find('input[type="time"]').attr('disabled', false)
+});

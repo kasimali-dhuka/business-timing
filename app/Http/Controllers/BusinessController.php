@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Business;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BusinessController extends Controller
 {
     public function index() {
-        return view('pages.home');
+        $businesses = Branch::with('business')->get()->toArray();
+        
+        return view('pages.home', ['businesses' => $businesses]);
     }
 
     public function showAddBusiness() {
@@ -30,12 +34,11 @@ class BusinessController extends Controller
             'logo' => null
         ];
 
-        if($request->hasfile('business_logo'))
-        {
+        if($request->hasfile('business_logo')) {
             $file = $request->file('business_logo');
             $extenstion = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extenstion;
-            $file->move('uploads/business-logo/', $filename);
+            $filename = Str::slug($valid_data['name']) . '_' . time().'.'.$extenstion;
+            $file->storeAs('public/business-logo/', $filename);
             $valid_data['logo'] = $filename;
         }
 
